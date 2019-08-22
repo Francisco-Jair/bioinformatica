@@ -31,6 +31,7 @@ public class Tela {
 	private JButton button_1;
 	private String dna;
 	private String rna;
+	private JTextField txtLocalDeSaida;
 
 	/**
 	 * Launch the application.
@@ -85,7 +86,7 @@ public class Tela {
 				// Para filtrar um tipo de arquivo
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 				open.setFileFilter(filter);
-				
+
 				open.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				open.showOpenDialog(frame);
 
@@ -156,10 +157,17 @@ public class Tela {
 		// Botão load
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Arquivo date = new Arquivo();
 				Transcricao tra = new Transcricao();
 
+				date.criarArquivo();
 				rna = tra.transcricao(dna);
 				textField_3.setText(rna);
+
+				date.escreverArquivo("RNA.txt", rna);
+				File arq = new File("RNA.txt");
+
+				txtLocalDeSaida.setText(arq.getPath());
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -173,6 +181,10 @@ public class Tela {
 		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_3.setEditable(false);
 		textField_3.setColumns(10);
+
+		txtLocalDeSaida = new JTextField();
+		txtLocalDeSaida.setEditable(false);
+		txtLocalDeSaida.setColumns(10);
 
 		button_1 = new JButton("Reiniciar");
 		button_1.addActionListener(new ActionListener() {
@@ -188,61 +200,79 @@ public class Tela {
 				textField_1.setEditable(true);
 				textField_1.setText("                      Entrar com DNA manualmente");
 				textField.setText("\t     Caminho do arquivo");
+				txtLocalDeSaida.setText("");
 			}
 		});
 
+		JLabel lblLocalDoArquivo = new JLabel("Local Do Arquivo De Saida");
+		lblLocalDoArquivo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-						.createSequentialGroup().addGap(19)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-								.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 126,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnAbrirArquivo, GroupLayout.PREFERRED_SIZE, 127,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(29))
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(19)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblRnam, GroupLayout.PREFERRED_SIZE, 71,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDna, GroupLayout.PREFERRED_SIZE, 83,
-														GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(ComponentPlacement.UNRELATED)))
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 537, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
-								.addComponent(textField_3)))
-						.addGroup(groupLayout.createSequentialGroup().addGap(286).addComponent(button,
-								GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup().addGap(305).addComponent(button_1,
-								GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap(170, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(36)
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(btnAbrirArquivo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnAbrirArquivo, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+									.addGap(29))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblLocalDoArquivo, Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(68)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblDna, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblRnam, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))))
+									.addPreferredGap(ComponentPlacement.UNRELATED)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 537, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+									.addComponent(textField_3))
+								.addComponent(txtLocalDeSaida, GroupLayout.PREFERRED_SIZE, 558, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(286)
+							.addComponent(button, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(305)
+							.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(136, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(36)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnAbrirArquivo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-				.addGap(26)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addGap(26)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-				.addGap(29)
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(button, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addGap(35)
-								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+					.addGap(29)
+					.addComponent(button, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(35)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDna, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-				.addGap(35)
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(lblRnam)
+					.addGap(35)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblRnam)
 						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-				.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE).addGap(41)));
+					.addGap(31)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblLocalDoArquivo, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtLocalDeSaida, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addGap(13)
+					.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+					.addGap(27))
+		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }
