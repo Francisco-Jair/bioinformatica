@@ -1,17 +1,18 @@
 #Transcrição de DNA
 
-dna = input("Entre com uma fita de DNA: ").upper()
+dna = input("Entre com o DNA: ")
 
-dna_lista = []
+dna = dna.upper()
+dna_tras = []
 
 for rna in list(dna):    
 
     if rna == 'T':
-        dna_lista.append('U')
+        dna_tras.append('U')
     elif rna != '.':
-        dna_lista.append(rna)
+        dna_tras.append(rna)
         
-dna = ''.join(dna_lista)
+dna = ''.join(dna_tras)
 
 print(dna)
 
