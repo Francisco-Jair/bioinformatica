@@ -1,6 +1,3 @@
-# GGC.CGA.UUA.AUG.CUU.AAA.UGC.GGC.CUA.AAU.UAU
-# print(geneticCode["GAU"])
-
 geneticCode = {
     'UUU': 'F', 'UUC': 'F', 'UUA': 'L', 'UUG': 'L',
     'UCU': 'S', 'UCC': 'S', 'UCA': 'L', 'UCG': 'L',
@@ -20,9 +17,27 @@ geneticCode = {
     'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G'
 }
 
+#AUGGGGGCAGGUCUUGAUGUAGCAACGACAGGGUUCUUAAAGCAGCAAAGAGUUGGCAGACGUUAG
+
 rna = input("Entre com a fita de RNA: ").upper()
 
-rnam = rna.split('.')
+rnam = []
+
+cont = 0
+r = ""
+for i in rna:
+    if cont == 3:
+        cont = 0
+        rnam.append(r)
+        r = ""
+
+    r += i
+    cont += 1
+    
+
+#print(rnam)
+#rnam = rna.split('.')
+
 
 iniciarT = False
 
