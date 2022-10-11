@@ -67,8 +67,10 @@ def solve(k, kmers):
         ans.append(start_v)
     else:
         print("Caminho Euleriano não encontrado!")
+    
     ans.reverse()
     return ans
+    
 
 
 file_name = input("Digite o nome do arquivo: ")
@@ -76,6 +78,7 @@ file_name = input("Digite o nome do arquivo: ")
 with open(file_name, 'r') as txt_file:
     kmers = txt_file.readline().split(',')[:-1]
 
+print(kmers[0])
 path = solve(len(kmers[0]), kmers)
 
 remontado = path[0][:]
